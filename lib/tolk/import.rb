@@ -20,6 +20,7 @@ module Tolk
 
         primary_locale = Tolk::Locale.primary_locale.name
         locales.each {|l|
+          puts "[INFO] Current locale file : #{l}"
           locale_name = File.basename(l, File.extname(l)).split('.').last
           return if locale_name == primary_locale
           import_locale(locale_name, l)
@@ -55,6 +56,7 @@ module Tolk
     end
 
     def read_locale_file(filename)
+      puts "[INFO] Trying to read #{filename}"
       locale_file = "#{self.locales_config_path}/#{filename}"
       raise "Locale file #{locale_file} does not exists" unless File.exists?(locale_file)
 
