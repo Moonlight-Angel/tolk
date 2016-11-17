@@ -40,10 +40,10 @@ module Tolk
             if translation.save
               count = count + 1
             elsif translation.errors[:variables].present?
-              puts "[WARN] Key '#{key}' from '#{locale_name}.yml' could not be saved: #{translation.errors[:variables].first}"
+              puts "[WARN] Key '#{key}' from '#{locale_path}.yml' could not be saved: #{translation.errors[:variables].first}"
             end
           else
-            puts "[ERROR] Key '#{key}' was found in '#{locale_name}.yml' but #{Tolk::Locale.primary_language_name} translation is missing"
+            puts "[ERROR] Key '#{key}' was found in '#{locale_path}.yml' but #{Tolk::Locale.primary_language_name} translation is missing"
           end
         end
 
