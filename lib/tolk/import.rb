@@ -9,14 +9,12 @@ module Tolk
       def import_secondary_locales
         locales = Dir.entries(self.locales_config_path)
 
-        if Tolk.config.block_xxx_en_yml_locale_files
-          locale_block_filter = Proc.new {
-            |l| ['.', '..'].include?(l) ||
-              !l.ends_with?('.yml') ||
-              l.match(/(.*\.){2,}/) # reject files of type xxx.en.yml
-          }
-          locales = locales.reject(&locale_block_filter)
-        end
+        locale_block_filter = Proc.new {
+          |l| ['.', '..'].include?(l) ||
+            !l.ends_with?('.yml') ||
+            (Tolk.config.block_xxx_en_yml_locale_files && l.match(/(.*\.){2,}/)) # reject files of type xxx.en.yml
+        }
+        locales = locales.reject(&locale_block_filter)
 
         primary_locale = Tolk::Locale.primary_locale.name
         locales.each {|l|
@@ -28,6 +26,7 @@ module Tolk
       end
 
       def import_locale(locale_name, locale_path)
+        puts "[INFO] Importing locale #{locale_name} (#{locale_path})"
         locale = Tolk::Locale.where(name: locale_name).first_or_create
         data = locale.read_locale_file(locale_path)
         return unless data
