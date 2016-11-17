@@ -47,7 +47,7 @@ module Tolk
           end
         end
 
-        puts "[INFO] Imported #{count} keys from #{locale_name}.yml"
+        puts "[INFO] Imported #{count} keys from #{locale_path}"
       end
 
     end
